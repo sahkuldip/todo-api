@@ -1,0 +1,24 @@
+/*
+  Warnings:
+
+  - Added the required column `user_id` to the `todos` table without a default value. This is not possible if the table is not empty.
+
+*/
+-- AlterTable
+ALTER TABLE "todos" ADD COLUMN     "user_id" INTEGER NOT NULL;
+
+-- CreateTable
+CREATE TABLE "users" (
+    "id" SERIAL NOT NULL,
+    "name" VARCHAR(191) NOT NULL,
+    "email" VARCHAR(191) NOT NULL,
+    "mobile" VARCHAR(15) NOT NULL,
+    "password" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "uptaded_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "todos" ADD CONSTRAINT "todos_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
